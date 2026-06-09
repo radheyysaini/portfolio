@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Radhey Saini — BCA student and data analytics intern in New Delhi. I like figuring out what data is actually saying." />
+  <meta name="keywords" content="Radhey Saini, portfolio, data analytics, BCA, New Delhi, Python" />
+  <meta name="author" content="Radhey Saini" />
+  <meta name="robots" content="index, follow" />
+
+  <meta property="og:title" content="Radhey Saini | Portfolio" />
+  <meta property="og:description" content="BCA student and data analytics intern based in New Delhi." />
+  <meta property="og:type" content="website" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Radhey Saini | Portfolio" />
+  <meta name="twitter:description" content="BCA student and data analytics intern based in New Delhi." />
+
+  <title>Radhey Saini | Portfolio</title>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f0f0f;
+      --surface: #161616;
+      --border: #2a2a2a;
+      --accent: #7c6af7;
+      --accent-dim: #3d3580;
+      --text: #e8e8e8;
+      --muted: #888;
+      --font-display: 'Georgia', serif;
+      --font-body: system-ui, -apple-system, sans-serif;
+      --radius: 8px;
+      --max-w: 860px;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f9f9f9;
+        --surface: #ffffff;
+        --border: #e0e0e0;
+        --text: #111;
+        --muted: #555;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 1rem;
+      background: var(--accent);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius);
+      font-weight: 600;
+      z-index: 9999;
+      transition: top 0.2s;
+    }
+    .skip-link:focus { top: 1rem; }
+
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .nav-logo:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
+
+    .nav-links { list-style: none; display: flex; gap: 2rem; }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a:focus-visible { color: var(--text); }
+    .nav-links a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
+
+    main {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    section { padding: 5rem 0; border-bottom: 1px solid var(--border); }
+    section:last-of-type { border-bottom: none; }
+
+    h1, h2, h3 { font-family: var(--font-display); line-height: 1.25; }
+    h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); }
+    h2 { font-size: 1.6rem; margin-bottom: 1.75rem; }
+    h3 { font-size: 1.05rem; margin-bottom: 0.35rem; }
+
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+
+    #hero { padding-top: 6rem; }
+
+    .hero-sub {
+      color: var(--muted);
+      font-size: 1.1rem;
+      max-width: 500px;
+      margin-top: 1rem;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.75rem 1.75rem;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      border-radius: var(--radius);
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .hero-cta:hover { background: var(--accent-dim); }
+    .hero-cta:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; }
+
+    #about p {
+      color: var(--muted);
+      max-width: 620px;
+      margin-bottom: 1rem;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    article.card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: border-color 0.2s;
+    }
+    article.card:hover { border-color: var(--accent); }
+
+    .card-tag {
+      font-size: 0.72rem;
+      background: var(--accent-dim);
+      color: var(--accent);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    .card p { color: var(--muted); font-size: 0.92rem; }
+
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      list-style: none;
+    }
+
+    .skills-list li {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 2rem 1.5rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
+
+    @media (max-width: 600px) {
+      .nav-links { gap: 1.2rem; }
+      section { padding: 3.5rem 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header role="banner">
+    <nav aria-label="Primary navigation">
+      <a href="index.html" class="nav-logo" aria-label="Radhey Saini — go to homepage">RS</a>
+      <ul class="nav-links" role="list">
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <section id="hero" aria-labelledby="hero-heading">
+      <span class="section-label" aria-hidden="true">Hello</span>
+      <h1 id="hero-heading">I'm Radhey Saini.</h1>
+      <p class="hero-sub">A BCA student from New Delhi who's been learning to make sense of data — one CSV at a time.</p>
+      <a href="#projects" class="hero-cta" aria-label="Jump to my projects">See my work</a>
+    </section>
+
+    <section id="about" aria-labelledby="about-heading">
+      <span class="section-label" aria-hidden="true">About</span>
+      <h2 id="about-heading">A bit about me</h2>
+      <p>I'm currently in my second year of BCA and doing a technical internship where I mostly work with Python. I came in with zero coding experience, which made the first few weeks genuinely hard — but I'm still here, still learning.</p>
+      <p>I'm not someone who enjoys chaos or jumping between ten things at once. I like sitting with a problem until it starts making sense. That's probably why data clicked for me — it rewards patience.</p>
+    </section>
+
+    <section id="projects" aria-labelledby="projects-heading">
+      <span class="section-label" aria-hidden="true">Work</span>
+      <h2 id="projects-heading">Things I've built</h2>
+      <div class="projects-grid">
+
+        <article class="card" aria-labelledby="proj1-title">
+          <span class="card-tag">Python</span>
+          <h3 id="proj1-title">Data Cleaning Script</h3>
+          <p>Wrote a script to strip duplicates and fill missing values in CSV files using pandas. Saved a lot of manual work.</p>
+        </article>
+
+        <article class="card" aria-labelledby="proj2-title">
+          <span class="card-tag">Analytics</span>
+          <h3 id="proj2-title">Sales Trend Report</h3>
+          <p>Pulled monthly sales data, plotted it with matplotlib, and summarised the findings in a simple report.</p>
+        </article>
+
+        <article class="card" aria-labelledby="proj3-title">
+          <span class="card-tag">HTML / CSS</span>
+          <h3 id="proj3-title">This Site</h3>
+          <p>Built from scratch with semantic HTML5 and proper accessibility — no frameworks, no shortcuts.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <section id="skills" aria-labelledby="skills-heading">
+      <span class="section-label" aria-hidden="true">Skills</span>
+      <h2 id="skills-heading">What I work with</h2>
+      <ul class="skills-list" aria-label="Technical skills">
+        <li>Python</li>
+        <li>pandas</li>
+        <li>SQL</li>
+        <li>Data Analytics</li>
+        <li>HTML5</li>
+        <li>CSS3</li>
+        <li>Git</li>
+        <li>Microsoft Excel</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer role="contentinfo">
+    <p>Made by Radhey Saini &nbsp;·&nbsp; <a href="contact.html">Say hello</a></p>
+  </footer>
+
+</body>
+</html>
