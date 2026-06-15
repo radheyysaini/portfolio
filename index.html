@@ -1,5 +1,6 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,46 +20,57 @@
   <title>Radhey Saini | Portfolio</title>
 
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+    /* ── CSS Variables: Light/Dark ── */
     :root {
       --bg: #0f0f0f;
-      --surface: #161616;
-      --border: #2a2a2a;
+      --bg-alt: #141414;
+      --surface: #1a1a1a;
+      --border: #272727;
       --accent: #7c6af7;
       --accent-dim: #3d3580;
+      --accent-glow: rgba(124, 106, 247, 0.15);
       --text: #e8e8e8;
-      --muted: #888;
+      --text-secondary: #aaa;
+      --muted: #666;
       --font-display: 'Georgia', serif;
       --font-body: system-ui, -apple-system, sans-serif;
-      --radius: 8px;
-      --max-w: 860px;
+      --radius: 10px;
+      --radius-sm: 6px;
+      --max-w: 1000px;
+      --nav-h: 62px;
+      --transition: 0.2s ease;
     }
 
-    @media (prefers-color-scheme: light) {
-      :root {
-        --bg: #f9f9f9;
-        --surface: #ffffff;
-        --border: #e0e0e0;
-        --text: #111;
-        --muted: #555;
-      }
+    [data-theme="light"] {
+      --bg: #f5f5f5;
+      --bg-alt: #ececec;
+      --surface: #ffffff;
+      --border: #e0e0e0;
+      --accent: #5b4fcf;
+      --accent-dim: #3d3580;
+      --accent-glow: rgba(91, 79, 207, 0.1);
+      --text: #111;
+      --text-secondary: #444;
+      --muted: #777;
     }
 
     @media (prefers-reduced-motion: reduce) {
-      * { animation: none !important; transition: none !important; }
+      *, *::before, *::after { transition: none !important; animation: none !important; }
     }
 
-    html { scroll-behavior: smooth; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
 
     body {
-      background: var(--bg);
+      background-color: var(--bg);
       color: var(--text);
       font-family: var(--font-body);
-      font-size: 1rem;
       line-height: 1.75;
+      transition: background-color var(--transition), color var(--transition);
     }
 
+    /* ── Skip Link ── */
     .skip-link {
       position: absolute;
       top: -100%;
@@ -66,29 +78,31 @@
       background: var(--accent);
       color: #fff;
       padding: 0.5rem 1rem;
-      border-radius: var(--radius);
+      border-radius: var(--radius-sm);
       font-weight: 600;
       z-index: 9999;
-      transition: top 0.2s;
+      transition: top var(--transition);
     }
     .skip-link:focus { top: 1rem; }
 
+    /* ── Header ── */
     header {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
       z-index: 100;
+      transition: background var(--transition), border-color var(--transition);
     }
 
     nav {
       max-width: var(--max-w);
       margin: 0 auto;
-      padding: 0 1.5rem;
+      padding: 0 2rem;
+      height: var(--nav-h);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 60px;
     }
 
     .nav-logo {
@@ -97,135 +111,281 @@
       font-weight: bold;
       color: var(--accent);
       text-decoration: none;
+      letter-spacing: 0.02em;
     }
     .nav-logo:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
 
-    .nav-links { list-style: none; display: flex; gap: 2rem; }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.75rem;
+    }
 
     .nav-links a {
       color: var(--muted);
       text-decoration: none;
       font-size: 0.9rem;
       letter-spacing: 0.03em;
-      transition: color 0.2s;
+      transition: color var(--transition);
     }
     .nav-links a:hover,
     .nav-links a:focus-visible { color: var(--text); }
     .nav-links a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
 
+    /* ── Theme Toggle ── */
+    .theme-toggle {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: border-color var(--transition), color var(--transition);
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+    .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+    /* ── Main Layout ── */
     main {
       max-width: var(--max-w);
       margin: 0 auto;
-      padding: 0 1.5rem;
+      padding: 0 2rem;
     }
 
-    section { padding: 5rem 0; border-bottom: 1px solid var(--border); }
+    section {
+      padding: 5.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
     section:last-of-type { border-bottom: none; }
 
-    h1, h2, h3 { font-family: var(--font-display); line-height: 1.25; }
-    h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); }
-    h2 { font-size: 1.6rem; margin-bottom: 1.75rem; }
-    h3 { font-size: 1.05rem; margin-bottom: 0.35rem; }
+    h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; }
+    h1 { font-size: clamp(2.4rem, 5vw, 3.5rem); }
+    h2 { font-size: clamp(1.4rem, 3vw, 1.75rem); margin-bottom: 2rem; }
+    h3 { font-size: 1.05rem; margin-bottom: 0.4rem; }
 
     .section-label {
-      font-size: 0.72rem;
-      letter-spacing: 0.14em;
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--accent);
-      font-weight: 600;
+      font-weight: 700;
       margin-bottom: 0.6rem;
-      display: block;
     }
 
-    #hero { padding-top: 6rem; }
+    /* ── Hero ── */
+    #hero {
+      padding-top: 7rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
 
     .hero-sub {
-      color: var(--muted);
-      font-size: 1.1rem;
-      max-width: 500px;
-      margin-top: 1rem;
+      color: var(--text-secondary);
+      font-size: 1.15rem;
+      max-width: 520px;
+      margin-top: 0.75rem;
     }
 
-    .hero-cta {
-      display: inline-block;
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
       margin-top: 2rem;
+    }
+
+    .btn-primary {
+      display: inline-block;
       padding: 0.75rem 1.75rem;
       background: var(--accent);
       color: #fff;
       text-decoration: none;
-      border-radius: var(--radius);
+      border-radius: var(--radius-sm);
       font-weight: 600;
-      transition: background 0.2s;
+      font-size: 0.95rem;
+      transition: background var(--transition), transform var(--transition);
     }
-    .hero-cta:hover { background: var(--accent-dim); }
-    .hero-cta:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; }
+    .btn-primary:hover { background: var(--accent-dim); transform: translateY(-1px); }
+    .btn-primary:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; }
+
+    .btn-secondary {
+      display: inline-block;
+      padding: 0.75rem 1.75rem;
+      background: transparent;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 1px solid var(--border);
+      transition: border-color var(--transition), color var(--transition);
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-secondary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+    /* ── About ── */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
 
     #about p {
-      color: var(--muted);
-      max-width: 620px;
-      margin-bottom: 1rem;
+      color: var(--text-secondary);
+      max-width: 640px;
+      margin-bottom: 0.75rem;
     }
 
+    /* ── Projects: CSS Grid ── */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.25rem;
     }
 
     article.card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.5rem;
-      transition: border-color 0.2s;
+      padding: 1.75rem;
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
-    article.card:hover { border-color: var(--accent); }
+    article.card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent-glow), 0 8px 24px rgba(0,0,0,0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Card 1: wide */
+    .card:nth-child(1) { grid-column: span 7; }
+    /* Card 2: narrow */
+    .card:nth-child(2) { grid-column: span 5; }
+    /* Card 3: full */
+    .card:nth-child(3) { grid-column: span 12; }
 
     .card-tag {
-      font-size: 0.72rem;
-      background: var(--accent-dim);
+      font-size: 0.7rem;
+      background: var(--accent-glow);
       color: var(--accent);
-      padding: 0.2rem 0.6rem;
-      border-radius: 4px;
+      border: 1px solid var(--accent-dim);
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
       display: inline-block;
-      margin-bottom: 0.75rem;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+      width: fit-content;
     }
 
-    .card p { color: var(--muted); font-size: 0.92rem; }
+    .card p { color: var(--muted); font-size: 0.9rem; flex: 1; }
+
+    /* ── Skills ── */
+    .skills-wrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .skill-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+    }
+
+    .skill-group h3 {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+      font-family: var(--font-body);
+      font-weight: 700;
+    }
 
     .skills-list {
+      list-style: none;
       display: flex;
       flex-wrap: wrap;
-      gap: 0.65rem;
-      list-style: none;
+      gap: 0.5rem;
     }
 
     .skills-list li {
-      background: var(--surface);
+      background: var(--bg);
       border: 1px solid var(--border);
-      padding: 0.4rem 1rem;
+      padding: 0.3rem 0.85rem;
       border-radius: 999px;
-      font-size: 0.88rem;
-      color: var(--muted);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
     }
 
+    /* ── Footer ── */
     footer {
       background: var(--surface);
       border-top: 1px solid var(--border);
-      text-align: center;
-      padding: 2rem 1.5rem;
-      color: var(--muted);
+      padding: 2rem;
+      transition: background var(--transition);
+    }
+
+    .footer-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
       font-size: 0.85rem;
+      color: var(--muted);
     }
 
     footer a { color: var(--accent); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
     footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
 
-    @media (max-width: 600px) {
-      .nav-links { gap: 1.2rem; }
-      section { padding: 3.5rem 0; }
+    /* ── Responsive: Tablet ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 1.25rem; }
+      main { padding: 0 1.25rem; }
+      section { padding: 4rem 0; }
+
+      .card:nth-child(1),
+      .card:nth-child(2),
+      .card:nth-child(3) { grid-column: span 12; }
+
+      .nav-links { gap: 1.1rem; }
+    }
+
+    /* ── Responsive: Mobile ── */
+    @media (max-width: 480px) {
+      nav { padding: 0 1rem; }
+      main { padding: 0 1rem; }
+      section { padding: 3rem 0; }
+      #hero { padding-top: 4rem; }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero-actions { flex-direction: column; }
+      .btn-primary, .btn-secondary { text-align: center; }
+
+      .footer-inner { flex-direction: column; text-align: center; }
     }
   </style>
 </head>
@@ -237,12 +397,19 @@
   <header role="banner">
     <nav aria-label="Primary navigation">
       <a href="index.html" class="nav-logo" aria-label="Radhey Saini — go to homepage">RS</a>
-      <ul class="nav-links" role="list">
-        <li><a href="#about">About</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
+      <div class="nav-right">
+        <ul class="nav-links" role="list">
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <button
+          class="theme-toggle"
+          aria-label="Toggle light and dark mode"
+          id="theme-btn"
+        >🌙</button>
+      </div>
     </nav>
   </header>
 
@@ -252,7 +419,10 @@
       <span class="section-label" aria-hidden="true">Hello</span>
       <h1 id="hero-heading">I'm Radhey Saini.</h1>
       <p class="hero-sub">A BCA student from New Delhi who's been learning to make sense of data — one CSV at a time.</p>
-      <a href="#projects" class="hero-cta" aria-label="Jump to my projects">See my work</a>
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary" aria-label="Jump to my projects">See my work</a>
+        <a href="contact.html" class="btn-secondary">Get in touch</a>
+      </div>
     </section>
 
     <section id="about" aria-labelledby="about-heading">
@@ -291,23 +461,64 @@
     <section id="skills" aria-labelledby="skills-heading">
       <span class="section-label" aria-hidden="true">Skills</span>
       <h2 id="skills-heading">What I work with</h2>
-      <ul class="skills-list" aria-label="Technical skills">
-        <li>Python</li>
-        <li>pandas</li>
-        <li>SQL</li>
-        <li>Data Analytics</li>
-        <li>HTML5</li>
-        <li>CSS3</li>
-        <li>Git</li>
-        <li>Microsoft Excel</li>
-      </ul>
+      <div class="skills-wrapper">
+        <div class="skill-group">
+          <h3>Languages</h3>
+          <ul class="skills-list" aria-label="Programming languages">
+            <li>Python</li>
+            <li>SQL</li>
+            <li>HTML5</li>
+            <li>CSS3</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <h3>Libraries</h3>
+          <ul class="skills-list" aria-label="Libraries and tools">
+            <li>pandas</li>
+            <li>matplotlib</li>
+            <li>numpy</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <h3>Tools</h3>
+          <ul class="skills-list" aria-label="Tools and platforms">
+            <li>Git</li>
+            <li>GitHub</li>
+            <li>Excel</li>
+            <li>VS Code</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
   </main>
 
   <footer role="contentinfo">
-    <p>Made by Radhey Saini &nbsp;·&nbsp; <a href="contact.html">Say hello</a></p>
+    <div class="footer-inner">
+      <span>Made by Radhey Saini</span>
+      <a href="contact.html">Say hello</a>
+    </div>
   </footer>
+
+  <script>
+    const btn = document.getElementById('theme-btn');
+    const html = document.documentElement;
+
+    // Respect system preference on first load
+    const stored = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initial = stored || (prefersDark ? 'dark' : 'light');
+    html.setAttribute('data-theme', initial);
+    btn.textContent = initial === 'dark' ? '☀️' : '🌙';
+
+    btn.addEventListener('click', () => {
+      const current = html.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      btn.textContent = next === 'dark' ? '☀️' : '🌙';
+      localStorage.setItem('theme', next);
+    });
+  </script>
 
 </body>
 </html>
