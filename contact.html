@@ -1,5 +1,6 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,116 +19,137 @@
   <title>Contact | Radhey Saini</title>
 
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
       --bg: #0f0f0f;
-      --surface: #161616;
-      --border: #2a2a2a;
+      --bg-alt: #141414;
+      --surface: #1a1a1a;
+      --border: #272727;
       --accent: #7c6af7;
       --accent-dim: #3d3580;
+      --accent-glow: rgba(124, 106, 247, 0.15);
       --text: #e8e8e8;
-      --muted: #888;
+      --text-secondary: #aaa;
+      --muted: #666;
       --font-display: 'Georgia', serif;
       --font-body: system-ui, -apple-system, sans-serif;
-      --radius: 8px;
-      --max-w: 860px;
+      --radius: 10px;
+      --radius-sm: 6px;
+      --max-w: 1000px;
+      --nav-h: 62px;
+      --transition: 0.2s ease;
     }
 
-    @media (prefers-color-scheme: light) {
-      :root { --bg: #f9f9f9; --surface: #ffffff; --border: #e0e0e0; --text: #111; --muted: #555; }
+    [data-theme="light"] {
+      --bg: #f5f5f5;
+      --bg-alt: #ececec;
+      --surface: #ffffff;
+      --border: #e0e0e0;
+      --accent: #5b4fcf;
+      --accent-dim: #3d3580;
+      --accent-glow: rgba(91, 79, 207, 0.1);
+      --text: #111;
+      --text-secondary: #444;
+      --muted: #777;
     }
 
     @media (prefers-reduced-motion: reduce) {
-      * { animation: none !important; transition: none !important; }
+      *, *::before, *::after { transition: none !important; animation: none !important; }
     }
 
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 1rem; line-height: 1.75; }
+    body { background-color: var(--bg); color: var(--text); font-family: var(--font-body); line-height: 1.75; transition: background-color var(--transition), color var(--transition); }
 
-    .skip-link {
-      position: absolute; top: -100%; left: 1rem;
-      background: var(--accent); color: #fff;
-      padding: 0.5rem 1rem; border-radius: var(--radius);
-      font-weight: 600; z-index: 9999; transition: top 0.2s;
-    }
+    .skip-link { position: absolute; top: -100%; left: 1rem; background: var(--accent); color: #fff; padding: 0.5rem 1rem; border-radius: var(--radius-sm); font-weight: 600; z-index: 9999; transition: top var(--transition); }
     .skip-link:focus { top: 1rem; }
 
-    header { background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+    header { background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; transition: background var(--transition), border-color var(--transition); }
 
-    nav {
-      max-width: var(--max-w); margin: 0 auto;
-      padding: 0 1.5rem; display: flex;
-      align-items: center; justify-content: space-between; height: 60px;
-    }
+    nav { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; }
 
     .nav-logo { font-family: var(--font-display); font-size: 1.2rem; font-weight: bold; color: var(--accent); text-decoration: none; }
     .nav-logo:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
 
-    .nav-links { list-style: none; display: flex; gap: 2rem; }
-    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; letter-spacing: 0.03em; transition: color 0.2s; }
+    .nav-right { display: flex; align-items: center; gap: 2rem; }
+    .nav-links { list-style: none; display: flex; gap: 1.75rem; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; letter-spacing: 0.03em; transition: color var(--transition); }
     .nav-links a:hover, .nav-links a:focus-visible { color: var(--text); }
     .nav-links a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
     .nav-links a[aria-current="page"] { color: var(--accent); }
 
-    main { max-width: var(--max-w); margin: 0 auto; padding: 5rem 1.5rem; }
+    .theme-toggle { background: var(--surface); border: 1px solid var(--border); color: var(--text-secondary); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; transition: border-color var(--transition), color var(--transition); }
+    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+    .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
-    h1 { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.5rem); line-height: 1.25; margin-bottom: 0.5rem; }
+    /* Page layout — CSS Grid */
+    .page-grid {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 5rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 4rem;
+      align-items: start;
+    }
 
-    .section-label { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 0.6rem; display: block; }
+    .contact-info { display: flex; flex-direction: column; gap: 0.75rem; }
 
-    .page-sub { color: var(--muted); margin-bottom: 3rem; max-width: 440px; }
+    h1 { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.5rem); line-height: 1.2; margin-bottom: 0.5rem; }
 
-    .contact-form { display: flex; flex-direction: column; gap: 1.25rem; max-width: 500px; }
+    .section-label { display: block; font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 0.6rem; }
 
+    .page-sub { color: var(--text-secondary); max-width: 320px; font-size: 0.95rem; }
+
+    .info-block { margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem; }
+
+    .info-item { display: flex; flex-direction: column; gap: 0.15rem; }
+    .info-item span:first-child { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); font-weight: 600; }
+    .info-item span:last-child { color: var(--text-secondary); font-size: 0.92rem; }
+
+    /* Form */
+    .contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
     .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
 
     label { font-size: 0.88rem; color: var(--muted); font-weight: 500; }
-
     .required-mark { color: var(--accent); margin-left: 2px; }
 
     input, textarea, select {
       background: var(--surface); border: 1px solid var(--border);
-      color: var(--text); padding: 0.65rem 0.9rem;
-      border-radius: var(--radius); font-size: 1rem;
-      font-family: var(--font-body); transition: border-color 0.2s; width: 100%;
+      color: var(--text); padding: 0.7rem 1rem;
+      border-radius: var(--radius-sm); font-size: 1rem;
+      font-family: var(--font-body); transition: border-color var(--transition), box-shadow var(--transition); width: 100%;
     }
-
-    input:focus, textarea:focus, select:focus {
-      outline: none; border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(124,106,247,0.2);
-    }
-
+    input:focus, textarea:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
     input[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: #d95f5f; }
 
     textarea { resize: vertical; min-height: 130px; }
+    .field-hint { font-size: 0.78rem; color: var(--muted); }
 
-    .field-hint { font-size: 0.8rem; color: var(--muted); }
-
-    .submit-btn {
-      align-self: flex-start; padding: 0.75rem 2rem;
-      background: var(--accent); color: #fff; border: none;
-      border-radius: var(--radius); font-size: 1rem;
-      font-weight: 600; cursor: pointer; transition: background 0.2s;
-    }
-    .submit-btn:hover { background: var(--accent-dim); }
+    .submit-btn { align-self: flex-start; padding: 0.75rem 2rem; background: var(--accent); color: #fff; border: none; border-radius: var(--radius-sm); font-size: 1rem; font-weight: 600; cursor: pointer; transition: background var(--transition), transform var(--transition); }
+    .submit-btn:hover { background: var(--accent-dim); transform: translateY(-1px); }
     .submit-btn:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; }
 
-    .success-msg {
-      display: none;
-      background: #1a2e1a; border: 1px solid #3a6b3a;
-      color: #7fcc7f; padding: 1rem 1.25rem;
-      border-radius: var(--radius); font-size: 0.95rem;
-      max-width: 500px;
-    }
+    .success-msg { display: none; background: #1a2e1a; border: 1px solid #3a6b3a; color: #7fcc7f; padding: 1rem 1.25rem; border-radius: var(--radius-sm); font-size: 0.95rem; }
 
-    footer { background: var(--surface); border-top: 1px solid var(--border); text-align: center; padding: 2rem 1.5rem; color: var(--muted); font-size: 0.85rem; }
+    footer { background: var(--surface); border-top: 1px solid var(--border); padding: 2rem; transition: background var(--transition); }
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; font-size: 0.85rem; color: var(--muted); }
     footer a { color: var(--accent); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
     footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
 
-    @media (max-width: 600px) {
-      .nav-links { gap: 1.2rem; }
+    /* Tablet */
+    @media (max-width: 768px) {
+      .page-grid { grid-template-columns: 1fr; gap: 2.5rem; padding: 3rem 1.25rem; }
+      .page-sub { max-width: 100%; }
+      nav { padding: 0 1.25rem; }
+    }
+
+    /* Mobile */
+    @media (max-width: 480px) {
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; }
+      .page-grid { padding: 2.5rem 1rem; }
+      .footer-inner { flex-direction: column; text-align: center; }
     }
   </style>
 </head>
@@ -139,99 +161,112 @@
   <header role="banner">
     <nav aria-label="Primary navigation">
       <a href="index.html" class="nav-logo" aria-label="Radhey Saini — go to homepage">RS</a>
-      <ul class="nav-links" role="list">
-        <li><a href="index.html#about">About</a></li>
-        <li><a href="index.html#projects">Projects</a></li>
-        <li><a href="index.html#skills">Skills</a></li>
-        <li><a href="contact.html" aria-current="page">Contact</a></li>
-      </ul>
+      <div class="nav-right">
+        <ul class="nav-links" role="list">
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#projects">Projects</a></li>
+          <li><a href="index.html#skills">Skills</a></li>
+          <li><a href="contact.html" aria-current="page">Contact</a></li>
+        </ul>
+        <button class="theme-toggle" aria-label="Toggle light and dark mode" id="theme-btn">🌙</button>
+      </div>
     </nav>
   </header>
 
   <main id="main-content">
-    <span class="section-label" aria-hidden="true">Contact</span>
-    <h1>Say hello</h1>
-    <p class="page-sub">Whether it's a project idea, a question, or just a hello — fill in the form and I'll get back to you, usually within a day.</p>
+    <div class="page-grid">
 
-    <div role="status" class="success-msg" id="success-msg" aria-live="polite">
-      Got it — I'll reply soon.
+      <aside class="contact-info" aria-label="Contact information">
+        <span class="section-label" aria-hidden="true">Contact</span>
+        <h1>Say hello</h1>
+        <p class="page-sub">Whether it's a project idea, a question, or just a hello — fill in the form and I'll get back to you.</p>
+        <div class="info-block">
+          <div class="info-item">
+            <span>Location</span>
+            <span>New Delhi, India</span>
+          </div>
+          <div class="info-item">
+            <span>Response time</span>
+            <span>Usually within a day</span>
+          </div>
+        </div>
+      </aside>
+
+      <section aria-labelledby="form-heading">
+        <h2 id="form-heading" class="visually-hidden">Contact form</h2>
+
+        <div role="status" class="success-msg" id="success-msg" aria-live="polite">
+          Got it — I'll reply soon.
+        </div>
+
+        <form class="contact-form" id="contact-form" aria-label="Contact form" novalidate>
+
+          <div class="form-group">
+            <label for="name">Name <span class="required-mark" aria-hidden="true">*</span></label>
+            <input type="text" id="name" name="name" required autocomplete="name" aria-required="true" aria-describedby="name-hint" placeholder="Your name" />
+            <span class="field-hint" id="name-hint">First and last name</span>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email <span class="required-mark" aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" required autocomplete="email" aria-required="true" aria-describedby="email-hint" placeholder="you@example.com" />
+            <span class="field-hint" id="email-hint">I'll reply here</span>
+          </div>
+
+          <div class="form-group">
+            <label for="subject">What's this about?</label>
+            <select id="subject" name="subject">
+              <option value="">Pick one</option>
+              <option value="work">Work or internship</option>
+              <option value="project">Collaboration</option>
+              <option value="general">Just saying hi</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message <span class="required-mark" aria-hidden="true">*</span></label>
+            <textarea id="message" name="message" required aria-required="true" aria-describedby="message-hint" placeholder="What's on your mind?"></textarea>
+            <span class="field-hint" id="message-hint">Keep it as short or as long as you need</span>
+          </div>
+
+          <button type="submit" class="submit-btn">Send</button>
+
+        </form>
+      </section>
+
     </div>
-
-    <form class="contact-form" id="contact-form" aria-label="Contact form" novalidate>
-
-      <div class="form-group">
-        <label for="name">
-          Name <span class="required-mark" aria-hidden="true">*</span>
-        </label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          required
-          autocomplete="name"
-          aria-required="true"
-          aria-describedby="name-hint"
-          placeholder="Your name"
-        />
-        <span class="field-hint" id="name-hint">First and last name</span>
-      </div>
-
-      <div class="form-group">
-        <label for="email">
-          Email <span class="required-mark" aria-hidden="true">*</span>
-        </label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          required
-          autocomplete="email"
-          aria-required="true"
-          aria-describedby="email-hint"
-          placeholder="you@example.com"
-        />
-        <span class="field-hint" id="email-hint">I'll reply here</span>
-      </div>
-
-      <div class="form-group">
-        <label for="subject">What's this about?</label>
-        <select id="subject" name="subject">
-          <option value="">Pick one</option>
-          <option value="work">Work or internship</option>
-          <option value="project">Collaboration</option>
-          <option value="general">Just saying hi</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="message">
-          Message <span class="required-mark" aria-hidden="true">*</span>
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          required
-          aria-required="true"
-          aria-describedby="message-hint"
-          placeholder="What's on your mind?"
-        ></textarea>
-        <span class="field-hint" id="message-hint">Keep it as short or as long as you need</span>
-      </div>
-
-      <button type="submit" class="submit-btn">Send</button>
-
-    </form>
   </main>
 
   <footer role="contentinfo">
-    <p>Made by Radhey Saini &nbsp;·&nbsp; <a href="index.html">Back to home</a></p>
+    <div class="footer-inner">
+      <span>Made by Radhey Saini</span>
+      <a href="index.html">Back to home</a>
+    </div>
   </footer>
 
   <script>
+    // Theme toggle
+    const btn = document.getElementById('theme-btn');
+    const html = document.documentElement;
+    const stored = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initial = stored || (prefersDark ? 'dark' : 'light');
+    html.setAttribute('data-theme', initial);
+    btn.textContent = initial === 'dark' ? '☀️' : '🌙';
+
+    btn.addEventListener('click', () => {
+      const current = html.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      btn.textContent = next === 'dark' ? '☀️' : '🌙';
+      localStorage.setItem('theme', next);
+    });
+
+    // Form
     const form = document.getElementById('contact-form');
     const successMsg = document.getElementById('success-msg');
 
-    form.addEventListener('submit', function (e) {
+    form.addEventListener('submit', function(e) {
       e.preventDefault();
       let valid = true;
       let firstInvalid = null;
@@ -246,10 +281,7 @@
         }
       });
 
-      if (!valid) {
-        firstInvalid.focus();
-        return;
-      }
+      if (!valid) { firstInvalid.focus(); return; }
 
       form.style.display = 'none';
       successMsg.style.display = 'block';
